@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<%-enroll_info%>
+
+<html>
+
+<head>
+
+
+    <script type="text/javascript" src="/html5lightbox/jquery.js"></script>
+    <script type="text/javascript" src="/html5lightbox/html5lightbox.js"></script>
+    <title>a</title>
+    <%- include( 'commonLinks'); %>
+
+        <style>
+            .sidebr {
+                border-radius: 100 !important;
+            }
+            
+            .typical_info .list-group-item {
+                display: flex;
+            }
+            
+            .blockelementleft {
+                flex: 1;
+            }
+            
+            .blockelement {
+                flex: 2;
+            }
+            
+            .blockelement {}
+            
+            .panel,
+            .list-group-item {
+                border-radius: 0 !important;
+            }
+            
+            .panel-heading {
+                background-color: white !important;
+            }
+
+        </style>
+
+</head>
+
+<body>
+
+    <%- include( 'navbar'); %>
+
+        <link rel="stylesheet" type="text/css" href="../../css/common.css">
+
+
+
+        <% var res=JSON.parse(JSON.stringify(result))%>
+
+            <section class="info">
+                <div class="container">
+
+                    <div class="row" style="margin:0 !important;
+			padding:0 !important;">
+                        <div class="panel panel-default" style="">
+                            <div class="panel-body" style="">
+                                <div class="col-lg-4">
+                                    <img src="<%-res['coverurl']%>" class="img-responsive">
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="text-center">
+                                        <h2> <%-res['name']%></h2>
+                                    </div>
+                                    
+                                    <%if(enroll_info=="no"){%>
+                                    <form action="/enroll" class="text-center" method="post">
+                                       <input type="hidden" name="course" value="<%-res['_id']%>">
+                                       <input type="hidden" name="coursename" value="<%-res['name']%>">
+                                        <button class="btn btn-primary">Enroll Now</button>
+                                    </form>
+                                    <%}else{%>
+                                    <div class="jumbotron text-center">Registered</div>
+                                    <%}%>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-9">
+
+
+                            <% var noVid=Object.keys(res[ 'material'][ 'vids']).length; var noDoc=Object.keys(res[ 'material'][ 'docs']).length; var vid=res[ 'material'][ 'vids']; var doc=res[ 'material'][ 'docs']; var vc=0,dc=0,c=0; var wkvid=1,wkdoc=1; var tst=JSON.parse(JSON.stringify(test)); var tmp=test; var status=JSON.parse(JSON.stringify(status)); var statusId_arr=[],status_arr=[]; var statId=0; for(var k=0;k<status.length;k++){ statusId_arr.push(status[k].paper_id); status_arr.push(status[k].status); } //var stats=Object.keys(status[]); %>
+                                <% while(vc<noVid) { c++; %>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>week <%- c %></h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item" style="background-color:grey;">
+                                                    videos
+                                                </li>
+                                                <% for(var i=vc;i<noVid;i++) {vc=i; if(i!=noVid-1 && vid[i][ 'week']!=vid[i+1][ 'week']){ %>
+                                                    <li class="list-group-item">
+                                                        <a class="html5lightbox" href="/<%- vid[i]['url'] %>">
+                                                            <%- vid[i][ 'name'] %>
+                                                        </a>
+                                                    </li>
+                                                    <% break;} %>
+                                                        <li class="list-group-item">
+                                                            <a class="html5lightbox" href="/<%- vid[i]['url'] %>">
+                                                                <%- vid[i][ 'name'] %>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                            </ul>
+
+                                            <ul class="list-group">
+
+                                                <li class="list-group-item" style="background-color:grey;">
+                                                    Learning materials
+                                                </li>
+
+                                                <% for(var i=dc;i<noDoc;i++) { dc=i; if(i!=noDoc-1 && doc[i][ 'week']!=doc[i+1][ 'week']){ %>
+                                                    <li class="list-group-item">
+                                                        <a class="html5lightbox" href="/<%- doc[i]['url'] %>">
+                                                            <%- doc[i][ 'name'] %>
+                                                        </a>
+                                                    </li>
+                                                    <% break;} %>
+                                                        <li class="list-group-item">
+                                                            <a class="html5lightbox" href="/<%- doc[i]['url'] %>">
+                                                                <%- doc[i][ 'name'] %>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <% vc++; dc++; } %>
+
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4>About the Course</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <%-res[ 'about']%>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4>Course Prerequisites</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <%-res[ 'prerequisite']%>
+                                            </div>
+                                        </div>
+                        </div>
+
+                        <div class="sidebr col-lg-3">
+                            <ul class="list-group typical_info">
+                                <li class="list-group-item">
+                                    <div class="blockelementleft">Length:</div>
+                                    <div class="blockelement">
+                                        <%-res[ 'length']%>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="blockelementleft">Effort:</div>
+                                    <div class="blockelement">
+                                        <%-res[ 'effort']%>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="blockelementleft">Subject:</div>
+                                    <div class="blockelement">
+                                        <%-res[ 'subject']%>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="blockelementleft">Level:</div>
+                                    <div class="blockelement">
+                                        <%-res[ 'level']%>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="blockelementleft">Language:</div>
+                                    <div class="blockelement">
+                                        <%-res[ 'language']%>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="list-group">
+
+                                <li class="list-group-item active">Test
+
+
+                                </li>
+
+                                <% for(var i=0;i<test.length;i++){ %>
+                                    <a href="<%-test[i]._id%>" class="list-group-item">
+
+                                        <% statId=statusId_arr.indexOf(tst[i]._id); if(statusId_arr.indexOf(tst[i]._id)!=-1){%>
+                                            <span class="badge"><span class="glyphicon glyphicon-<%=status_arr[statId]%>" aria-hidden="true"></span> </span>
+                                            <%}%>
+                                                Test
+                                                <%-test[i].paperNo%>
+                                    </a>
+                                    <%}%>
+                            </div>
+
+                            <%if(status!="no" && status_arr.indexOf( "remove")==-1){ if(payment=="no" ){ %>
+
+
+                                <div class="jumbotron text-center">You cleared the tests! Do you need Certificate.
+
+                                    <form action="create" class="" method="post">
+                                        <div class="form-group">
+
+                                            <input type="hidden" name="method" , value="paypal">
+                                            <input type="hidden" name="course" , value="<%-res['name']%>">
+                                            <input type="submit" value="yes" class="form-control btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <%} else{ %>
+                                    <div class="jumbotron text-center">Applied for placement</div>
+                                    <% } }%>
+
+                                        <%if(emp_info=="no" ){%>
+                                            <div class="jumbotron text-center"><a href="/employeeRegistration">Placement Details</a></div>
+                                            <%}else{%>
+                                                <div class="jumbotron text-center">Registered for placement</div>
+                                                <%}%>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+
+
+<%-status%>
+
+
+
+
+
+
+</body>
+
+
+</html>

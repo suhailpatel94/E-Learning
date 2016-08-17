@@ -1,0 +1,3 @@
+mongodump --db primer //dump database
+
+mongorestore --db primer primer

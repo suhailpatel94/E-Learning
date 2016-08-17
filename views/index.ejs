@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <%- include( 'commonLinks'); %>
+        <style>
+            .popular a:link,
+            .popular a:visited {
+                color: black;
+                text-decoration: none;
+            }
+            
+            .c_info {
+                display: flex;
+            }
+            
+            .c_info div {
+                flex: 1;
+            }
+        </style>
+
+</head>
+
+
+<body style="background-color:#F4F3F2;">
+    <%- include( 'navbar'); %>
+        <div class="container" id="cwrap">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <% var a=JSON.parse(JSON.stringify(result)); data="[" +data+ "]"; for(var i=0;i<label.length;i++) label[i]="'" +label[i]+ "'"; label="[" +label+ "]"; %>
+
+
+
+
+            <div class="popular container">
+                <% for(var i=0;i<a.length;i++){ %>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12 thumb">
+                        <a class="thumbnail" href="<%- a[i]._id%>/">
+                            <img class="img-responsive" src="<%- a[i].coverurl%>" alt="">
+                            <h3><%- a[i].name %></h3>
+                            <h5 class="bg-info">
+					<div class="c_info">
+						<div class="text-left">Enrolled:<?php echo $enrolled;?></div>
+						<div class="text-right">Start:<?php echo $start_time;?></div>
+					</div>
+				</h5>
+                        </a>
+                    </div>
+                    <%} %>
+
+            </div>
+            <script src="/javascripts/Chart.min.js"></script>
+            <script>
+                var data = {
+                    labels:<%-label%>,
+                    datasets: [{
+                        label: "My Second dataset",
+                        fillColor: "rgba(51, 255, 174,0.7)",
+                        strokeColor: "rgba(151,187,205,0.8)",
+                        highlightFill: "rgba(151,187,205,0.75)",
+                        highlightStroke: "rgba(151,187,205,1)",
+                        data: <%-data%>
+                    }]
+                };
+                var ctx = document.getElementById("myChart").getContext("2d");
+                var myBarChart = new Chart(ctx).Bar(data, {
+                    responsive: true
+                });
+            </script>
+
+
+
+</body>
+
+</html>
